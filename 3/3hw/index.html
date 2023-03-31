@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        .task4container{
+            display: inline-block;
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .ilselected {
+            background-color: orange;
+        }
+        .ulcont
+        {
+            width: 200px;
+            padding: 10px;
+        }
+
+        .tooltip {
+			position: relative;
+			display: inline-block;
+		}
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 120px;
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px;
+			position: absolute;
+			z-index: 1;
+		}
+		.tooltip.bottom .tooltiptext {
+			top: 100%;
+			margin-top: 5px;
+		}
+        .tooltip:hover .tooltiptext {
+			visibility: visible;
+		}
+        
+        li:hover {
+        font-weight: bold;
+        }
+        #text-block {
+			width: 400px;
+			height: 300px;
+			border: 2px solid black;
+			resize: both;
+			overflow: auto;
+			padding: 10px;
+			font-size: 16px;
+		}
+    </style>
+</head>
+<body>
+    <div>
+        <p>Task 1</p>
+        <br>
+        <label>Enter your name: (without digits)</label>
+        <input id="input1" type="text" onkeypress="f1()">
+    </div>
+
+    <div>
+        <p>Task 2</p>
+        <br>
+        <button id="btn2">Open modal</button>
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <p>Modal window</p>
+                <button id="btn22">Close modal</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <p>Task 3</p>
+        <canvas id="myCanvas" width="1000" height="600"></canvas>
+    </div>
+
+    <div>
+        <p>Task 4</p>
+        <div class="task4container">
+            <div id="div41" style="border-radius: 50%; background-color: #888; width: 50px; height: 50px; display: inline-block; margin: 10px;">
+
+            </div>
+            <div id="div42" style="border-radius: 50%; background-color: #888; width: 50px; height: 50px; display: inline-block; margin: 10px;">
+
+            </div>
+            <div id="div43" style="border-radius: 50%; background-color: #888; width: 50px; height: 50px; display: inline-block; margin: 10px;">
+                
+            </div>
+            <button id="btn4" style="display: inline-block;">Next</button>
+        </div>
+    </div>
+
+    <div>
+        <p>Task 5</p>
+        <ul class="ulcont">
+            <li onclick="changeColor(this)">Book 1: "123123"</li>
+            <li onclick="changeColor(this)">Book 2: "123123"</li>
+            <li onclick="changeColor(this)">Book 3: "123123"</li>
+            <li onclick="changeColor(this)">Book 4: "123123"</li>
+        </ul>
+    </div>
+
+
+    <div>
+        <p>Task 6</p>
+        <div class="tooltip">
+            <button onmouseover="setTooltipPosition(tooltip, this)">
+                Кнопка 1
+            </button>
+            <span class="tooltiptext">Підказка для кнопки 1</span>
+        </div>
+    </div>
+
+    <div>
+        <p>Task 7</p>
+        <ul id="tree">
+            <li>
+              Directory 1
+              <ul>
+                <li>File 1</li>
+                <li>File 2</li>
+              </ul>
+            </li>
+            <li>
+              Directory 2
+              <ul>
+                <li>File 1</li>
+                <li>File 2</li>
+              </ul>
+            </li>
+          </ul>
+    </div>
+    
+    <div>
+        <p>Task 8</p>
+        <div id="text-block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam porta dolor sit amet nisi faucibus, nec facilisis justo euismod. Aenean tristique dolor eget lectus sollicitudin, sed consequat nibh fermentum. Nullam at nisl vitae ex dapibus hendrerit. Nam pellentesque vestibulum velit, sit amet pretium velit porta eget. Vivamus finibus, arcu vel convallis aliquam, sapien sapien consequat mi, in vulputate nunc quam eu eros. Aliquam sit amet placerat nunc. Suspendisse euismod quis quam et pharetra. Nulla quis augue vel purus maximus blandit. Maecenas eu mauris mauris.</p>
+        </div>
+    </div>
+    <script>
+        {
+        var input1 = document.getElementById("input1");
+        input1.addEventListener('keypress', function(e) {
+            if(e.key.charCodeAt() >= 48 && e.key.charCodeAt() <= 57)
+                e.preventDefault();
+        });
+
+        var btn2 = document.getElementById("btn2");
+        var btn22 = document.getElementById("btn22");
+        var modal2 = document.getElementById("modal2");
+        btn2.addEventListener('click', function(e){
+            modal2.style.display = "block";
+        });
+        btn22.addEventListener('click', function(e){
+            modal2.style.display = "none";
+        });
+        
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+        const ballRadius = 50;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        const ballSpeed = 5;
+        const fieldColor = "#5cb85c";
+        const ballColor = "#f0ad4e";
+
+      function drawField() {
+        ctx.beginPath();
+        ctx.rect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = fieldColor;
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = ballColor;
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function moveBall(event) {
+  const rect = canvas.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const clickY = event.clientY - rect.top;
+  if (clickX > ballRadius && clickX < canvas.width - ballRadius && clickY > ballRadius && clickY < canvas.height - ballRadius) {
+    const distance = Math.sqrt(Math.pow(clickX - ballX, 2) + Math.pow(clickY - ballY, 2));
+    const time = distance / ballSpeed;
+    const xSpeed = (clickX - ballX) / time;
+    const ySpeed = (clickY - ballY) / time;
+    let i = 0;
+    const moveInterval = setInterval(() => {
+      if (i >= time) {
+        clearInterval(moveInterval);
+      } else {
+        ballX += xSpeed;
+        ballY += ySpeed;
+        // Перевіряємо, чи м'яч не вийшов за межі поля
+        if (ballX - ballRadius < 0) {
+          ballX = ballRadius;
+          xSpeed *= -1;
+        }
+        if (ballX + ballRadius > canvas.width) {
+          ballX = canvas.width - ballRadius;
+          xSpeed *= -1;
+        }
+        if (ballY - ballRadius < 0) {
+          ballY = ballRadius;
+          ySpeed *= -1;
+        }
+        if (ballY + ballRadius > canvas.height) {
+          ballY = canvas.height - ballRadius;
+          ySpeed *= -1;
+        }
+        drawField();
+        drawBall();
+      }
+      i++;
+    }, 10);
+  }
+}
+
+      drawField();
+      drawBall();
+      canvas.addEventListener('click', moveBall);
+
+        var currentCircle = 3;
+        var circleColors = {
+            0: "#888",
+            1: "#FF0000",
+            2: "#FFFF00",
+            3: "#00FF00"
+        }
+        var btn4 = document.getElementById("btn4");
+        btn4.addEventListener('click', function(e){
+            var circle = document.getElementById(`div4${currentCircle}`);
+            circle.style.background = circleColors[0];
+            if(currentCircle == 3)
+                currentCircle = 1;
+            else
+                currentCircle++;
+            var nextCircle = document.getElementById(`div4${currentCircle}`);
+            nextCircle.style.background = circleColors[currentCircle];
+        });
+
+        function changeColor(element)
+        {
+            if(element.classList.contains('ilselected'))
+            {
+                element.classList.remove('ilselected');
+            }
+            else
+            {
+                element.classList.add('ilselected');
+            }
+        }
+    }
+        function setTooltipPosition(tooltip, button) {
+			var rect = button.getBoundingClientRect();
+            
+			if (rect.top < tooltip.offsetHeight) {
+				// якщо підказка не поміщається зверху, то відображаємо її знизу
+				tooltip.classList.add('bottom');
+			} else {
+				tooltip.classList.remove('bottom');
+			}
+		}
+
+        var tree = document.getElementById("tree");
+        var nodes = tree.getElementsByTagName("li");
+
+        for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        var childNodes = node.getElementsByTagName("ul");
+        
+        if (childNodes.length > 0) {
+            var button = document.createElement("button");
+            button.innerHTML = "+";
+            node.insertBefore(button, node.firstChild);
+            button.onclick = function() {
+            var subList = this.parentNode.getElementsByTagName("ul")[0];
+            if (subList.style.display == "none") {
+                subList.style.display = "block";
+                this.innerHTML = "-";
+            } else {
+                subList.style.display = "none";
+                this.innerHTML = "+";
+            }
+            }
+        }
+        }
+
+        const textBlock = document.getElementById('text-block');
+		let startX = 0;
+		let startY = 0;
+		let startWidth = 0;
+		let startHeight = 0;
+
+		textBlock.addEventListener('mousedown', function(event) {
+			if (event.offsetX > textBlock.offsetWidth - 10 && event.offsetY > textBlock.offsetHeight - 10) {
+				startX = event.clientX;
+				startY = event.clientY;
+				startWidth = parseInt(document.defaultView.getComputedStyle(textBlock).width, 10);
+				startHeight = parseInt(document.defaultView.getComputedStyle(textBlock).height, 10);
+				document.addEventListener('mousemove', resizeBlock);
+				document.addEventListener('mouseup', stopResizeBlock);
+			}
+		});
+
+		function resizeBlock(event) {
+			textBlock.style.width = (startWidth + event.clientX - startX) + 'px';
+			textBlock.style.height = (startHeight + event.clientY - startY) + 'px';
+		}
+
+		function stopResizeBlock(event) {
+			document.removeEventListener('mousemove', resizeBlock);
+			document.removeEventListener('mouseup', stopResizeBlock);
+		}
+    </script>
+</body>
+</html>

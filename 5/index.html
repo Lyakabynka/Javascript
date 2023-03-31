@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Task 1</p>
+    <div style="display: inline-block;">
+        <input type="number" id="i1" value="0" readonly>
+        <button id="b1-increment" onclick="increment()">INC</button>
+        <button id="b1-decrement" onclick="decrement()">DEC</button>
+    </div>
+
+    <p>Task 2</p>
+    <div style="display: inline-block;">
+        <div id="d2-colorblocks" style="display: flex; float:left; flex-wrap: wrap;">
+
+        </div>
+        <button onclick="addBlock()">Add block</button>
+    </div>
+    
+    <p>Task 3</p>
+    <div style="display: inline-block;">
+        <div style="display: inline-flex; float:left; flex-wrap: wrap; max-width: 600px;">
+            <div onclick="changeColor(this)" style="background-color: black; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: red; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: orange; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: yellowgreen; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: yellow; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: green; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: blue; width: 50px; height: 50px;"></div>
+            <div onclick="changeColor(this)" style="background-color: darkblue; width: 50px; height: 50px;"></div>
+        </div>
+        <br>
+        <br>
+        <p id="p3">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Animi delectus libero cum dolorum aspernatur enim illo! 
+            ommodi nulla eius unde sit consequatur nesciunt, ex nam voluptates 
+            consequuntur amet facere eos illum quibusdam veniam, dicta porro 
+            voluptatum quos quas aut? Quasi consequuntur, qui assumenda incidunt 
+            optio veniam tempora, dicta aliquid a doloremque saepe reprehenderit
+             quisquam autem sunt nisi voluptas cupiditate! Quibusdam repellendus 
+             id libero, sunt labore quisquam suscipit maiores, deleniti facere a
+             ccusamus corrupti quae et aut odit eos nemo provident doloribus, 
+             nostrum molestiae voluptatibus deserunt iure? 
+            Quasi repudiandae magni sit tenetur corrupti reprehenderit eum ab soluta sunt iure? 
+            Distinctio, libero totam?</p>
+    </div>
+
+    <p>Task 4</p>
+    <div>
+        <h2>What is Lorem Ipsum?</h2><br>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Nulla adipisci assumenda, error itaque laborum rerum necessitatibus incidunt pariatur. 
+            Delectus voluptas nemo expedita numquam eos. Dolorem pariatur, 
+            sint maiores culpa distinctio cupiditate aut autem modi quae dignissimos, 
+            quos molestiae earum, placeat accusantium incidunt esse ut est possimus
+             minima debitis optio obcaecati eum inventore soluta! Nam cumque itaque,
+              eum aliquam ipsam facilis maxime labore minus illo sequi a? Blanditiis,
+               commodi corrupti libero quae ratione ab dignissimos quis enim qui molestiae
+                quos cum eius, dolor animi. Sequi eaque sit, velit libero cum quas doloremque!
+             Sint, mollitia aliquam. Autem porro voluptatem eveniet voluptatibus id.
+        </p>
+        <hr>
+        <div id="d4-comment-section">
+
+        </div>
+        <hr>
+        <div>
+            <label>Name:</label>
+            <input id="i4-name" type="text">
+            <label>Comment:</label>
+            <textarea id="ta4-body"></textarea>
+            <button onclick="addComment()">Submit</button>
+        </div>
+    </div>  
+
+    <p>Task 5</p>
+    <div>
+        <input id="i5" oninput="showSuggestions()" type="text">
+        <ul id="ul5-suggestions"></ul>
+    </div>
+
+    <p>Task 6</p>
+    <div>
+        <input type="text" id="result" disabled>
+        <br>
+        <button onclick="handleClick('1')">1</button>
+        <button onclick="handleClick('2')">2</button>
+        <button onclick="handleClick('3')">3</button>
+        <button onclick="handleClick('+')">+</button>
+        <br>
+        <button onclick="handleClick('4')">4</button>
+        <button onclick="handleClick('5')">5</button>
+        <button onclick="handleClick('6')">6</button>
+        <button onclick="handleClick('-')">-</button>
+        <br>
+        <button onclick="handleClick('7')">7</button>
+        <button onclick="handleClick('8')">8</button>
+        <button onclick="handleClick('9')">9</button>
+        <button onclick="handleClick('*')">*</button>
+        <br>
+        <button onclick="handleClick('0')">0</button>
+        <button onclick="handleClick('.')">.</button>
+        <button onclick="handleClick('/')">/</button>
+        <button onclick="handleClick('C')">C</button>
+        <br>
+        <button onclick="handleClick('=')">=</button>
+    </div>
+    <script>
+        const i1 = document.querySelector('#i1');
+
+        let d2colorblocks = document.querySelector('#d2-colorblocks');
+
+        let p3 = document.querySelector('#p3');
+
+        const i4 = document.querySelector('#i4-name');
+        const ta4 = document.querySelector('#ta4-body');
+        let commentsection = document.querySelector('#d4-comment-section');
+
+        const i5 = document.querySelector('#i5');
+        const countries = [
+            'Afghanistan',
+            'Albania',
+            'Algeria',
+            'Andorra',
+            'Angola',
+            'Antigua and Barbuda',
+            'Argentina',
+            'Armenia',
+            'Australia',
+            'Austria',
+            'Azerbaijan',
+            'Bahamas',
+            'Bahrain',
+            'Bangladesh',
+            'Barbados',
+            'Belarus',
+            'Belgium',
+            'Belize',
+            'Benin',
+            'Bhutan'
+            ];
+        const ul5 = document.querySelector('#ul5-suggestions');
+
+        let i6 = document.querySelector('#result');
+
+        function increment()
+        {
+            let current = parseInt(i1.value);
+            current++;
+            i1.value = current;
+        }
+        function decrement()
+        {
+            let current = parseInt(i1.value);
+            current--
+            i1.value = current;
+        }
+        function getRandomColor() {
+            // Generate random values for red, green, and blue color channels
+            const red = Math.floor(Math.random() * 256);
+            const green = Math.floor(Math.random() * 256);
+            const blue = Math.floor(Math.random() * 256);
+
+            // Combine the red, green, and blue values into a single hexadecimal value
+            const color = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
+
+            return color;
+        }
+        function addBlock()
+        {
+            let block = document.createElement('div');
+            block.style.width = "200px";
+            block.style.height = "100px";
+            block.style.backgroundColor = getRandomColor();
+            block.onclick = (e) => {
+                block.remove()
+            }
+
+            d2colorblocks.appendChild(block);
+        }
+        function changeColor(e)
+        {
+            p3.style.color = e.style.backgroundColor;
+        }
+        function addComment()
+        {
+            let block = document.createElement('div');
+
+            block.innerHTML = `<p>${i4.value}</p><p>${new Date().toDateString()}<p><p>${ta4.value}</p>`;
+
+            commentsection.appendChild(block);
+        }
+        function showSuggestions()
+        {
+            const actualInput = i5.value.trim(); // удаляет пробелы (whitespaces)
+            ul5.innerHTML = '';
+            if(actualInput == '') return;
+            const countriesToSuggest 
+                            = countries
+                                .filter(country => country.toLowerCase().startsWith(actualInput.toLowerCase()));
+            countriesToSuggest.slice(0,10);
+
+            for(country of countriesToSuggest)
+            {
+                const li = document.createElement('li');
+                li.textContent = country;
+
+                li.onclick = () =>{
+                    i5.value = country;
+                    ul5.innerHTML = '';
+                }
+
+                ul5.appendChild(li);
+            }
+        }
+        
+        function handleClick(c)
+        {
+            if(c == 'C')
+            {
+                i6.value = '';
+            }
+            else if(c == '=')
+            {
+                try{
+                    i6.value = eval(i6.value);
+                }
+                catch{
+                    i6.value = 'Error';
+                }
+            }
+            else
+            {
+                i6.value += c;
+            }
+        }
+    </script>
+</body>
+</html>

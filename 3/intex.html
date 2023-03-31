@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+		/* Стилі для меню */
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			background-color: #333;
+			position: sticky;
+			top: 0;
+			width: 100%;
+		}
+		
+		li {
+			float: left;
+		}
+		
+		li a {
+			display: block;
+			color: rgb(85, 19, 19);
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+		
+		li a:hover {
+			background-color: #111;
+		}
+		
+		/* Стилі для випадаючого списку */
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+		
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			z-index: 1;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			padding: 12px 16px;
+		}
+		
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+    <div>
+        <p>Task1:</p>
+        <br>
+        <p id="randInt"></p>
+        <button onclick="f1()">Random Number</button>
+    </div>
+    <br>
+    <div id="divxy">
+        <p>Task 2</p>
+        <br>
+        <p id="xpos"></p>
+        <br>
+        
+        <p id="ypos"></p>
+    </div>
+    <div>
+        <p>Task 3</p>
+        <br>
+        <button onclick="f3()">Hide / show</button>
+        <p id="text3">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Earum placeat ipsum sunt unde possimus id, similique ipsa expedita nulla 
+            veritatis porro error dolores iure quisquam ad optio accusamus deleniti repellendus.
+            Voluptatibus nisi culpa nemo quidem quia? 
+            Illo libero doloremque, dolorum culpa consequuntur vitae aliquam repellat.
+            Consectetur tempora nam accusamus itaque!</p>
+    </div>
+
+    <div>
+        <p>Task 4</p>
+        <br>
+        <p id="text4"></p>
+        <br>
+        <button id="btn1" onclick="f41()">1</button>
+        <button id="btn2" onclick="f42()">2</button>
+        <button id="btn3" onclick="f43()">3</button>
+    </div>
+
+    <div>
+        <h1>Task 5</h1>
+	    <ul id="news-list">
+            <li id="news-1">Перша новина <button onclick="deleteNews('news-1')">Видалити</button></li>
+            <li id="news-2">Друга новина <button onclick="deleteNews('news-2')">Видалити</button></li>
+            <li id="news-3">Третя новина <button onclick="deleteNews('news-3')">Видалити</button></li>
+            <li id="news-4">Четверта новина <button onclick="deleteNews('news-4')">Видалити</button></li>
+            <li id="news-5">П'ята новина <button onclick="deleteNews('news-5')">Видалити</button></li>
+	    </ul>
+    </div>
+
+    <div>
+        <p>Task 6</p>
+        <progress id="progress6" max="100" value="0"></progress>
+        <br>
+        <button id="btn6" onclick="f6()">Click</button>
+    </div>
+
+    <div>
+        <table>
+            <tr>
+              <td id="cell1" onmouseover="changeColor('cell1', '#ccc')" onmouseleave="changeColor('cell1', '')">Клітинка 1</td>
+              <td id="cell2" onmouseover="changeColor('cell2', '#ccc')" onmouseleave="changeColor('cell2', '')">Клітинка 2</td>
+              <td id="cell3" onmouseover="changeColor('cell3', '#ccc')" onmouseleave="changeColor('cell3', '')">Клітинка 3</td>
+              <td id="cell4" onmouseover="changeColor('cell4', '#ccc')" onmouseleave="changeColor('cell4', '')">Клітинка 4</td>
+            </tr>
+            <tr>
+              <td id="cell5" onmouseover="changeColor('cell5', '#ccc')" onmouseleave="changeColor('cell5', '')">Клітинка 5</td>
+              <td id="cell6" onmouseover="changeColor('cell6', '#ccc')" onmouseleave="changeColor('cell6', '')">Клітинка 6</td>
+              <td id="cell7" onmouseover="changeColor('cell7', '#ccc')" onmouseleave="changeColor('cell7', '')">Клітинка 7</td>
+              <td id="cell8" onmouseover="changeColor('cell8', '#ccc')" onmouseleave="changeColor('cell8', '')">Клітинка 8</td>
+            </tr>
+            <tr>
+              <td id="cell9" onmouseover="changeColor('cell9', '#ccc')" onmouseleave="changeColor('cell9', '')">Клітинка 9</td>
+              <td id="cell10" onmouseover="changeColor('cell10', '#ccc')" onmouseleave="changeColor('cell10', '')">Клітинка 10</td>
+              <td id="cell11" onmouseover="changeColor('cell11', '#ccc')" onmouseleave="changeColor('cell11', '')">Клітинка 11</td>
+              <td id="cell12" onmouseover="changeColor('cell12', '#ccc')" onmouseleave="changeColor('cell12', '')">Клітинка 12</td>
+            </tr>
+          </table>
+    </div>
+
+    <div>
+        <p id="p8">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Temporibus minima inventore placeat cupiditate praesentium tempore est,
+            ducimus tempora ut ab doloribus tenetur incidunt! 
+            Fuga numquam veniam provident similique sapiente obcaecati hic non impedit.
+            Repellat quae quas fuga eos quis, praesentium dignissimos suscipit.
+            Quas quod dolor eaque molestias nesciunt soluta modi.
+        </p>
+    </div>
+
+    <div>
+        <button id="button9">Likes: 0</button>
+    </div>
+
+    <div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Categories</a>
+                <div class="dropdown-content">
+                    <a href="#">Jeans</a>
+                    <a href="#">Shirts</a>
+                    <a href="#">Trousers</a>
+                    <a href="#">Caps</a>
+                </div>
+            </li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <script>
+        let randNum = document.getElementById("randInt");
+        let xpos = document.getElementById("xpos");
+        let ypos = document.getElementById("ypos");
+        let divwithxy = document.getElementById("divxy");
+        divwithxy.addEventListener('mousemove', f2,false);
+
+        let text;
+        let ptext = document.getElementById("text3");
+        
+        let text4 = document.getElementById("text4");
+
+        let list = document.getElementById("news-list");
+
+        let progressbar = document.getElementById("progress6");
+        
+        let progressvalue = 0;
+        let btn6 = document.getElementById("btn6");
+
+        btn6.onclick = f6;
+        
+        let p8 = document.getElementById("p8");
+        p8.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+        });
+
+      // Забороняємо виклик контекстного меню правою кнопкою миші
+        p8.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+        });
+        
+        let likeButton = document.getElementById("button9");
+        let count = 0;
+
+        likeButton.addEventListener('click', function() {
+            count = count + 1; // Збільшуємо кількість лайків
+            likeButton.textContent = `Likes: ${count}`; // Оновлюємо відображення кількості лайків
+        });
+
+        var dropdowns = document.getElementsByClassName("dropdown");
+		var i;
+
+		for (i = 0; i < dropdowns.length; i++) {
+			dropdowns[i].addEventListener("click", function() {
+				this.classList.toggle("active");
+				var dropdownContent = this.nextElementSibling;
+				if (dropdownContent.style.display === "block") {
+					dropdownContent.style.display = "none";
+				} else {
+					dropdownContent.style.display = "block";
+				}
+			});
+		}
+
+        function f1()
+        {
+            randNum.innerText = `${Math.round(Math.random()*100)}`;    
+        }
+        function f2(e)
+        {
+            xpos.innerText = `x = ${e.pageX}`;
+            ypos.innerText = `y = ${e.pageY}`;
+        }
+        function f3()
+        {
+            if(ptext.innerText == "")
+            {
+                ptext.innerText = text;
+            }
+            else
+            {
+                text = ptext.innerText;
+                ptext.innerText = "";
+            } 
+        }
+        function f41()
+        {
+            text4.innerText = "First button was pressed.";
+            btn1.style.background = "azure";
+            btn2.style.background = "";
+            btn3.style.background = "";
+        }
+        function f42()
+        {
+            text4.innerText = "Second button was pressed.";
+            btn1.style.background = "";
+            btn2.style.background = "azure";
+            btn3.style.background = "";
+        }
+        function f43()
+        {
+            text4.innerText = "Third button was pressed.";
+            btn1.style.background = "";
+            btn2.style.background = "";
+            btn3.style.background = "azure";
+        }
+        function deleteNews(index) {
+            let element = document.getElementById(index);
+			element.parentNode.removeChild(element);
+        }
+        function f6()
+        {
+            progressvalue += 5;
+
+            progressvalue = Math.min(progressvalue,100);
+
+            progressbar.value = progressvalue;
+        }
+        function changeColor(cellId, color)
+        {
+            var cell = document.getElementById(cellId);
+            cell.style.backgroundColor = color;
+        }
+        
+    </script>
+</body>
+</html>
