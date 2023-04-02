@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+      .accordion {
+			background-color: #eee;
+			color: #444;
+			cursor: pointer;
+			padding: 18px;
+			width: 100%;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 15px;
+			transition: 0.4s;
+		}
+		
+		.active, .accordion:hover {
+			background-color: #ccc;
+		}
+		
+		.panel {
+			padding: 0 18px;
+			background-color: white;
+			display: none;
+			overflow: hidden;
+			border: none;
+		}
+    </style>
+</head>
+<body>
+    <p>Task 1</p>
+    <div>
+        <button id="b1-trackbar" style="background-color: lightblue; position: absolute;">123</button>
+    </div>
+    
+    <p>Task 2</p>
+    <div>
+        <div class="container">
+            <div class="row">
+              <div class="col-sm-8 offset-sm-2 text-center">
+                <img id="gallery-img" src="https://picsum.photos/600/400" alt="Gallery Image" class="img-fluid mb-3">
+                <div>
+                  <button id="back-button" class="btn btn-secondary mr-3" disabled>Back</button>
+                  <button id="forward-button" class="btn btn-secondary" >Forward</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    
+    <p>Task 3</p>
+        <div>
+          <button class="accordion">Заголовок блоку 1</button>
+      <div class="panel">
+        <p>Контент блоку 1.</p>
+      </div>
+
+      <button class="accordion">Заголовок блоку 2</button>
+      <div class="panel">
+        <p>Контент блоку 2.</p>
+      </div>
+
+      <button class="accordion">Заголовок блоку 3</button>
+      <div class="panel">
+        <p>Контент блоку 3.</p>
+      </div>
+    </div>
+
+
+    <p>Task 4</p>
+    <div>
+      <div id="d4">
+        
+      </div>
+    </div>
+    
+    <p>Task 5</p>
+    <div>
+      <label>Month:</label>
+      <input id="i5-month" type="number">
+      <label>Year:</label>
+      <input id="i5-year" type="number" maxlength="2">
+      <br>
+      <button onclick="drawTable()">123123</button>
+      <div class="container mt-4">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+              </tr>
+              <tbody id="t5">
+              </thead>
+
+              </tbody>
+          </table>
+      </div>
+    </div>
+    
+    <p>Task 6</p>
+    <div>
+      <ul class="list-group" id="ul6">
+        <li class="list-group-item"><a href="https://www.google.com/">https://www.google.com/</a></li>
+        <li class="list-group-item"><a href="../index.html">/5/index.html</a></li>
+        <li class="list-group-item"><a href="https://www.google.com/">https://www.google.com/</a></li>
+        <li class="list-group-item"><a href="https://www.google.com/">https://www.google.com/</a></li>
+        <li class="list-group-item"><a href="../5hw/index.html">/4/index.html</a></li>
+        <li class="list-group-item"><a href="https://www.google.com/">https://www.google.com/</a></li>
+      </ul>
+    </div>
+
+
+    <p>Task 7</p>
+    <div>
+      <ul id="bookList" style="list-style: decimal">
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, consequuntur.</li>
+      </ul>
+    </div>
+
+    <p>Task 8</p>
+    <div>
+      <div id="text" contenteditable="false">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Doloribus non commodi et modi labore, 
+        corporis assumenda officia blanditiis similique laudantium?
+      </div>
+      <textarea id="textarea" style="display:none;"></textarea>
+    </div>
+
+    <p>Task 9</p>
+    <div class="container mt-4">
+      <table id="myTable" class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">Age</th>
+            <th onclick="sortTable(2)">Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>25</td>
+            <td>USA</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>30</td>
+            <td>Canada</td>
+          </tr>
+          <tr>
+            <td>Bob</td>
+            <td>20</td>
+            <td>Mexico</td>
+          </tr>
+        </tbody>
+      </table>
+    
+    </div>
+    <script>
+
+{
+        let button = document.getElementById("b1-trackbar");
+        let isDragging = false;
+        let startX;
+        let startY;
+        let currentX;
+        let currentY;
+
+        button.addEventListener("mousedown", function(event) {
+        startX = event.clientX;
+        isDragging = true;
+        });
+
+        button.addEventListener("mousemove", function(event) {
+            if (isDragging) {
+                currentX = event.clientX - startX;
+                button.style.left = button.offsetLeft + currentX + "px";
+
+                startX = event.clientX;
+            }
+        });
+
+        button.addEventListener("mouseup", function(event) {
+            isDragging = false;
+        });
+
+        button.addEventListener("mouseleave", function(event) {
+            isDragging = false;
+        });
+        
+    const galleryImg = document.getElementById('gallery-img');
+    const backButton = document.getElementById('back-button');
+    const forwardButton = document.getElementById('forward-button');
+
+    const images = [
+      "https://picsum.photos/600/400?random=1",
+      "https://picsum.photos/600/400?random=2",
+      "https://picsum.photos/600/400?random=3",
+      "https://picsum.photos/600/400?random=4",
+      "https://picsum.photos/600/400?random=5",
+    ];
+
+    let currentImageIndex = 0;
+
+    
+    function updateGalleryImage(index) {
+      galleryImg.setAttribute('src', images[index]);
+    }
+
+   
+    function updateBackButton(index) 
+    {
+      if (index === 0) {
+        backButton.setAttribute('disabled', true);
+      } else {
+        backButton.removeAttribute('disabled');
+      }
+    }
+
+        function updateForwardButton(index) {
+      if (index === images.length - 1) {
+        forwardButton.setAttribute('disabled', true);
+      } else {
+        forwardButton.removeAttribute('disabled');
+      }
+    }
+
+    
+    function updateGallery(index) {
+      currentImageIndex = index;
+      updateGalleryImage(index);
+      updateBackButton(index);
+      updateForwardButton(index);
+    }
+
+    backButton.addEventListener('click', function() {
+      updateGallery(currentImageIndex - 1);
+    });
+
+    forwardButton.addEventListener('click', function() {
+      updateGallery(currentImageIndex + 1);
+    });
+
+    updateGallery(0);
+
+      var acc = document.getElementsByClassName("accordion");
+      var i;   
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            var panel = this.nextElementSibling;
+
+            for (j = 0; j < acc.length; j++) {
+              if (acc[j] != this) {
+                acc[j].classList.remove("active");
+                acc[j].nextElementSibling.style.display = "none";
+              }
+            }
+
+            if (panel.style.display === "block") {
+              this.classList.remove("active");
+              panel.style.display = "none";
+            } else {
+              this.classList.add("active");
+              panel.style.display = "block";
+            }
+        });
+      }
+    
+
+    const newsData = [
+      {
+        title: "News Article 4",
+        content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      },
+      {
+        title: "News Article 5",
+        content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      },
+      {
+        title: "News Article 6",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 7",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 8",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 9",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 10",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 11",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 12",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 13",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 14",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 15",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 16",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 17",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 18",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 19",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 20",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      },
+      {
+        title: "News Article 21",
+        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
+      }
+    ];
+
+    //if user scrolls, check if its the end of the current page,
+    //if so, load new News.
+    window.addEventListener("scroll", () => {
+      
+      const bottomOfViewport = window.scrollY + window.innerHeight;
+      
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      if (bottomOfViewport >= documentHeight) {
+        loadNews();
+      }
+    });
+    
+    const newsContainer = document.querySelector('#d4');
+    //initial loading
+    loadNews();
+    
+    function loadNews() {
+
+      newsData.slice(newsContainer.childElementCount,newsContainer.childElementCount+2).forEach((newsItem) => {
+        const div = document.createElement("div");
+        div.classList.add("news-item");
+
+        const title = document.createElement("h2");
+        title.innerText = newsItem.title;
+
+        const content = document.createElement("p");
+        content.innerText = newsItem.content;
+
+        div.appendChild(title);
+        div.appendChild(content);
+
+        newsContainer.appendChild(div);
+      });
+    }
+  
+    
+    let t5 = document.querySelector('#t5');
+    let i5month = document.querySelector('#i5-month');
+    let i5year = document.querySelector('#i5-year');
+
+    function drawTable()
+    {
+      let month = parseInt(i5month.value);
+				let year = parseInt(i5year.value);
+				// Validate inputs
+				if (isNaN(month) || month > 12 || isNaN(year)) {
+					alert("Please enter a valid month and year.");
+					return;
+				}
+				// Get the number of days in the month
+				let daysInMonth = new Date(year, month, 0).getDate();
+				// Get the first WEEKday of the month
+				let firstDayOfMonth = new Date(year, month - 1, 0).getDay();
+				// Create the calendar
+				let calendar = "";
+				let day = 1;
+        // 6 -- maximum number of rows that can possibly be
+				for (let i = 0; i < 6; i++) {
+        calendar += "<tr>";
+          for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDayOfMonth) {
+              calendar += "<td></td>";
+            } 
+            else if (day > daysInMonth) {
+              break;
+            } 
+            else {
+              calendar += "<td>" + day + "</td>";
+              day++;
+            }
+          }
+        calendar += "</tr>";
+      }
+
+      calendar += "</tbody>";
+
+      document.querySelector('#t5').innerHTML = calendar;
+        
+    }
+
+  }
+
+    let listLi = document.querySelectorAll('#ul6 li');
+    listLi.forEach(li => {
+      if(li.firstChild.getAttribute('href').startsWith('http'))
+        li.style.textDecoration = 'underline';
+    });
+    
+
+    const bookList = document.getElementById('bookList');
+  const lis = bookList.querySelectorAll('li');
+  let selectedLis = [];
+    
+
+lis.forEach((li, index) => {
+  li.addEventListener('click', (event) => {
+    const currentIdx = index;
+    const lastSelectedIdx = selectedLis.length ? Array.from(lis).indexOf(selectedLis[selectedLis.length - 1]) : -1;
+
+    if (li.style.color === 'orange') {
+      li.style.color = '';
+    } else {
+      li.style.color = 'orange';
+    }
+
+    
+    if (event.ctrlKey) {
+      if (selectedLis.includes(li)) {
+        selectedLis = selectedLis.filter(selectedLi => selectedLi !== li);
+      } else {
+        selectedLis.push(li);
+      }
+    } else {
+      
+      selectedLis.forEach(selectedLi => selectedLi.style.color = '');
+      selectedLis = [li];
+    }
+
+    
+    if (event.shiftKey && lastSelectedIdx !== -1) {
+      for (let i = Math.min(currentIdx, lastSelectedIdx); i <= Math.max(currentIdx, lastSelectedIdx); i++) {
+        lis[i].style.color = 'orange';
+        if (event.ctrlKey) {
+          selectedLis.push(lis[i]);
+        }
+      }
+    }
+  });
+});
+
+
+const text = document.getElementById('text');
+    const textarea = document.getElementById('textarea');
+
+    // switch to editing mode when Ctrl+E is pressed
+    text.addEventListener('click', (event) => {
+        event.preventDefault();
+        text.style.display = 'none';
+        textarea.style.display = '';
+        textarea.value = text.innerText;
+        textarea.focus();
+    });
+
+    // switch back to display mode and update text when Ctrl+S is pressed
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 's' && event.ctrlKey) {
+        event.preventDefault();
+        text.style.display = '';
+        textarea.style.display = 'none';
+        text.innerText = textarea.value;
+      }
+    });
+    
+    
+    function sortTable(column) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("tr");
+    for (i = 1; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[column];
+      y = rows[i + 1].getElementsByTagName("td")[column];
+      if (column === 1) { // If sorting by Age column
+        x = parseInt(x.innerHTML);
+        y = parseInt(y.innerHTML);
+      } else {
+        x = x.innerHTML.toLowerCase();
+        y = y.innerHTML.toLowerCase();
+      }
+      if (x > y) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+    
+    </script>
+</body>
+</html>
