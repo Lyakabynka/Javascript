@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .color {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			margin: 5px;
+			border-radius: 50%;
+			box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
+		}
+    </style>
+</head>
+<body>
+    <p>Task 1</p>
+    <div>
+        <form>
+            <label>Your login:</label><br>
+            <input type="text" id="login1"><br>
+            <label>Your password:</label><br>
+            <input type="password" id="password1"><br>
+            <input type="checkbox" id="checkbox1"><br>
+            <input type="button" id="button1" value="123123"><br>
+            <a href="./index.html">Forgot password</a>
+        </form>
+    </div>
+    <p>Task 2</p>
+    <div>
+        <form>
+            <label>Your login:</label><br>
+            <input type="text" id="login2"><br>
+            <label>Your email:</label><br>
+            <input type="email" id="email2"><br>
+            <label>Your password:</label><br>
+            <input type="password" id="password2"><br>
+            <label>Confirm your password:</label><br>
+            <input type="password" id="confirm-password2"><br>
+            <input type="button" id="button2" value="Sign Up"><br>
+        </form>
+    </div>
+
+    <p>Task 3</p>
+    <div>
+        <form>
+            <label>Your first name:</label><br>
+            <input type="text" id="firstname3"><br>
+            <label>Your last name:</label><br>
+            <input type="text" id="lastname3"><br>
+            <label>Your birthdate:</label><br>
+            <input type="date" id="birthdate3"><br>
+            <label>Gender:</label><br>
+            <input type="radio" id="male3" name="gender3" value="Male">
+            <input type="radio" id="female3" name="gender3" value="Female"><br>
+            <input type="text" list="countrySuggestions" value="Україна" id="country3"/>
+                <datalist id="countrySuggestions">
+                <option value="Україна"></option>
+                <option value="Польща"></option>
+                <option value="Чехія"></option>
+                <option value="Німеччина"></option>
+                <option value="Литва"></option>
+                <option value="Латвія"></option>
+                <option value="Естонія"></option> 
+                </datalist><br>
+
+            <input type="text" list="citySuggestions" value="Kyiv" id="city3"/>
+                <datalist id="citySuggestions">
+                <option value="Kyiv"></option>
+                <option value="Польща"></option>
+                <option value="Чехія"></option>
+                <option value="Німеччина"></option>
+                <option value="Литва"></option>
+                <option value="Латвія"></option>
+                <option value="Естонія"></option> 
+                </datalist><br>
+            
+            <label>Skills:</label><br>
+            <input type="checkbox" id="html3" value="HTML">
+            <input type="checkbox" id="css3" value="Css">
+            <input type="checkbox" id="javascript3" value="Javascript">
+            <input type="button" id="button3" value="Save"><br>
+        </form>
+        <div id="result3">
+
+        </div>
+    </div>
+    
+    <p>Task 4</p>
+    <div>
+        <div id="color-container"></div>
+        <form id="add-color-form">
+            <label for="red-input">Red:</label>
+            <input type="number" id="red-input" min="0" max="255" required>
+            <label for="green-input">Green:</label>
+            <input type="number" id="green-input" min="0" max="255" required>
+            <label for="blue-input">Blue:</label>
+            <input type="number" id="blue-input" min="0" max="255" required>
+            <button type="submit">Add Color</button>
+        </form>
+    </div>
+    <script>
+        const login1 = document.querySelector('#login1');
+        const password1 = document.querySelector('#password1');
+        const checkbox1 = document.querySelector('#checkbox1');
+        const button1 = document.querySelector('#button1');
+        button1.addEventListener('click', (e)=>{
+            if(!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password1.value)))
+            {
+                e.preventDefault();
+                return;
+            }
+            
+            if(checkbox1.checked)
+                alert(`Hello, ${login1}. I remembered you!`);
+            else
+                alert(`Hello, ${login1}. I did not remember you!`);
+        });
+
+        const login2 = document.querySelector('#login2');
+        const email2 = document.querySelector('#email2');
+        const password2 = document.querySelector('#password2');
+        const confirmPassword2 = document.querySelector('#confirm-password2');
+        const button2 = document.querySelector('#button2');
+        button2.addEventListener('click',(e)=>{
+            if(!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password2.value)))
+            {
+                e.preventDefault();
+                return;
+            }
+            else if(password2.value != confirmPassword2.value)
+            {
+                e.preventDefault();
+                return;
+            }
+            else if(!String(email2.value).includes('@') || !String(email2.value).includes('@'))
+            {
+                e.preventDefault();
+                return;
+            }
+
+            alert(`Confirmation email has been sent to ${email2.value}`);
+        });
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstname3 = document.querySelector('#firstname3');
+            const lastname3 = document.querySelector('#lastname3');
+            const birthdate3 = document.querySelector('#birthdate3');
+            const country3 = document.querySelector('#country3');
+            const city3 = document.querySelector('#city3');
+
+            const button3 = document.querySelector('#button3');
+            button3.addEventListener('click', function() {
+                var gender3 = document.querySelector('input[name="gender3"]:checked').value;
+
+                var html = document.getElementById("html3");
+                var css = document.getElementById("css3");
+                var javascript = document.getElementById("javascript3");
+
+                let result3 = document.querySelector('#result3'); 
+
+                var htmlString = "<p>First Name: " + firstname3.value + "</p>" +
+                        "<p>Last Name: " + lastname3.value + "</p>" +
+                        "<p>Birthdate: " + birthdate3.value + "</p>" +
+                        "<p>Gender: " + gender3 + "</p>" +
+                        "<p>Country: " + country3.value + "</p>" +
+                        "<p>City: " + city3.value + "</p>" +
+                        "<p>Skills:</p>" +
+                        "<ul>";
+
+                if (html.checked) {
+                    htmlString += "<li>HTML</li>";
+                }
+
+                if (css.checked) {
+                    htmlString += "<li>CSS</li>";
+                }
+
+                if (javascript.checked) {
+                    htmlString += "<li>Javascript</li>";
+                }
+
+                htmlString += "</ul>";
+
+                result3.innerHTML = htmlString;
+            });
+        });
+
+
+        const colorContainer = document.getElementById('color-container');
+		const addColorForm = document.getElementById('add-color-form');
+
+		function addColor() {
+			const redInput = document.getElementById('red-input');
+			const greenInput = document.getElementById('green-input');
+			const blueInput = document.getElementById('blue-input');
+
+			const red = redInput.value;
+			const green = greenInput.value;
+			const blue = blueInput.value;
+
+			const color = `rgb(${red}, ${green}, ${blue})`;
+
+			const colorDiv = document.createElement('div');
+			colorDiv.classList.add('color');
+			colorDiv.style.backgroundColor = color;
+
+			colorContainer.appendChild(colorDiv);
+
+			redInput.value = '';
+			greenInput.value = '';
+			blueInput.value = '';
+		}
+
+		addColorForm.addEventListener('submit', function(event) {
+			event.preventDefault();
+			addColor();
+		});
+    </script>
+</body>
+</html>

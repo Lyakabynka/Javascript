@@ -452,11 +452,11 @@
     
 
     const bookList = document.getElementById('bookList');
-  const lis = bookList.querySelectorAll('li');
-  let selectedLis = [];
+    const lis = bookList.querySelectorAll('li');
+    let selectedLis = [];
     
 
-lis.forEach((li, index) => {
+    lis.forEach((li, index) => {
   li.addEventListener('click', (event) => {
     const currentIdx = index;
     const lastSelectedIdx = selectedLis.length ? Array.from(lis).indexOf(selectedLis[selectedLis.length - 1]) : -1;
@@ -493,7 +493,7 @@ lis.forEach((li, index) => {
 });
 
 
-const text = document.getElementById('text');
+    const text = document.getElementById('text');
     const textarea = document.getElementById('textarea');
 
     // switch to editing mode when Ctrl+E is pressed

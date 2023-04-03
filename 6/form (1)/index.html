@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="block">
+    <img id="img_pers" src="your_personal_artist_and_gunslinger_by_vogelfreyh_dctlva4-fullview.png" alt="">
+    <form>
+      <h2>Реєстрація</h2>
+      <label class="label1">Нікнейм: </label>
+      <input class="input-text" type="text" placeholder="Example4235" id="nick"><br>
+      <label class="label1">Пошта: </label>
+      <input class="input-text" type="email" placeholder="example@gmail.com" id="email"><br>
+      <label class="label1">Дата народження: </label>
+      <input type="date" placeholder="Birthday" id="birthdate"><br>
+      <label class="label1">Пароль: </label>
+      <input type="password" placeholder="Password" id="password"><br>
+      <label class="label2">Чоловік</label>
+      <input type="radio" value="male" id="gender1" name="sex"/>
+      <label class="label2">Жінка</label>
+      <input type="radio" value="female" id="gender2" name="sex"/><br>
+      <label class="label1">Країна: </label>
+      <input type="text" list="countrySuggestions" value="Україна" id="country"/>
+        <datalist id="countrySuggestions">
+          <option value="Україна"></option>
+          <option value="Польща"></option>
+          <option value="Чехія"></option>
+          <option value="Німеччина"></option>
+          <option value="Литва"></option>
+          <option value="Латвія"></option>
+          <option value="Естонія"></option> 
+        </datalist><br>
+        <label class="label1">Тип персонажа: </label>
+        <select id="personType" name="personType" id="character-type">
+          <option>Мечник</option>
+          <option>Лучник</option>
+          <option>Наїздник</option>
+        </select><br>
+        <label class="label1">Ігровий досвід: </label>
+        <input type="number" id="gaming-experience" min="0" max="60" step="1">
+        <br>
+      <button id="button" onclick="register()">Submit</button><br>
+      <label id="result"></label>
+    </form>
+  </div>
+  <script>
+    let button = document.querySelector('#button');
+    button.addEventListener('click', (e)=>{
+      let nick = String(document.querySelector('#nick').value);
+      let email = String(document.querySelector('#email').value);
+      let birthdate = String(document.querySelector('#birthdate').value);
+      let password = String(document.querySelector('#password').value);
+      let result = document.querySelector('#result');
+      if(!email.includes('@')
+        || !email.includes('.') || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password))
+      {
+        result.textContent = "Validation problem.";
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
