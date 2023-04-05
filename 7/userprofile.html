@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>User Info</h1>
+    <button onsubmit="exit()">Exit</button>
+    <form id="f2">
+        <label id="email">Email:</label>
+            <br>
+            <label>First name:</label><br>
+            <input type="text" id="first-name" required> <br>
+            <label id="first-name-error" style="visibility: hidden;">Invalid first name.</label> <br>
+
+            <label>Last name:</label> <br>
+            <input type="text" id="last-name" required><br>
+            <label id="last-name-error" style="visibility: hidden;">Invalid last name.</label> <br>
+
+            <label>Year of birth:</label> <br>
+            <input type="number" id="birth-year" required> <br>
+            <label id="birth-year-error" style="visibility: hidden;">Invalid year of birth.</label> <br>
+
+            <label>Gender:</label> <br>
+            <select id="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select> <br> <br>
+            
+            <label>Phone number:</label> <br>
+            <input type="tel" id="phone-number"> <br>
+            <label id="phone-number-error" style="visibility: hidden;">Invalid phone number.</label> <br>
+
+            <label>Skype:</label> <br>
+            <input type="tel" id="skype"> <br>
+            <label id="skype-error" style="visibility: hidden;">Invalid skype.</label> <br>
+
+            <input type="submit" value="Save">
+    </form>
+    <script>
+        if(getCookie("email") == null)
+        {
+            window.location.replace("./index.html");
+        }
+        
+
+        function exit()
+        {
+            eraseCookie("email");
+            eraseCookie("password");
+            eraseCookie("first-name");
+            eraseCookie("last-name");
+            eraseCookie("birth-year");
+            eraseCookie("gender");
+            eraseCookie("phone-number");
+            eraseCookie("skype");
+        }
+
+        const form2 = document.querySelector('#f2');
+        form2.querySelector('#email').value = getCookie("email");
+
+        form2.addEventListener('submit', (e)=>{
+
+            let invalidCredentials = false;
+
+            let firstname_error = form2.querySelector('#first-name-error');
+            let lastname_error = form2.querySelector('#last-name-error');
+            let birthyear_error = form2.querySelector('#birth-year-error');
+            let phonenumber_error = form2.querySelector('#phone-number-error');
+            let skype_error = form2.querySelector('#skype-error');
+
+            firstname_error.style.visibility = "hidden";
+            lastname_error.style.visibility = "hidden";
+            birthyear_error.style.visibility = "hidden";
+            phonenumber_error.style.visibility = "hidden";
+            skype_error.style.visibility = "hidden";
+
+            const firstname = (form2.querySelector('#first-name').value = getCookie("first-name"));
+            const lastname = (form2.querySelector('#last-name').value = getCookie("last-name"));
+            const birthyear = (form2.querySelector('#birthyear').value = getCookie("birth-year"));
+            const gender = (form2.querySelector('#gender').value = getCookie("gender"));
+            const phonenumber = (form2.querySelector('#phone-number').value = getCookie("phone-number"));
+            const skype = (form2.querySelector('#skype').value = getCookie("skype"));
+
+            if(!/[a-zA-Z]/.test(firstname))
+            {
+                firstname_error.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(!/[a-zA-Z]/.test(lastname))
+            {
+                lastname_error.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(birthyear < 1900 || birthyear > new Date().getFullYear())
+            {
+                birthyear_error.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(phonenumber != "" && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phonenumber))
+            {
+                phonenumber_error.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(skype != "" && !/[a-zA-Z][a-zA-Z0-9\.,\-_]{5,31}/.test(skype))
+            {
+                skype_error.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+
+            if(invalidCredentials == true)
+            {
+                e.preventDefault();
+            }
+            else
+            {
+                alert('123');
+                setCookie("first-name", firstname, 1);
+                setCookie("last-name", lastname, 1);
+                setCookie("birth-year", birthyear, 1);
+                setCookie("gender", gender, 1);
+                setCookie("phone-number", phonenumber, 1);
+                setCookie("skype", skype, 1);
+            }
+        });
+
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {   
+            document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+    </script>
+</body>
+</html>

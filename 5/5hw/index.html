@@ -517,34 +517,34 @@
     
     
     function sortTable(column) {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable");
-  switching = true;
-  while (switching) {
-    switching = false;
-    rows = table.getElementsByTagName("tr");
-    for (i = 1; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("td")[column];
-      y = rows[i + 1].getElementsByTagName("td")[column];
-      if (column === 1) { // If sorting by Age column
-        x = parseInt(x.innerHTML);
-        y = parseInt(y.innerHTML);
-      } else {
-        x = x.innerHTML.toLowerCase();
-        y = y.innerHTML.toLowerCase();
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("myTable");
+    switching = true;
+    while (switching) {
+      switching = false;
+      rows = table.getElementsByTagName("tr");
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("td")[column];
+        y = rows[i + 1].getElementsByTagName("td")[column];
+        if (column === 1) { // If sorting by Age column
+          x = parseInt(x.innerHTML);
+          y = parseInt(y.innerHTML);
+        } else {
+          x = x.innerHTML.toLowerCase();
+          y = y.innerHTML.toLowerCase();
+        }
+        if (x > y) {
+          shouldSwitch = true;
+          break;
+        }
       }
-      if (x > y) {
-        shouldSwitch = true;
-        break;
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
       }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
     }
   }
-}
     
     </script>
 </body>

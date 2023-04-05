@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Task 1</p>
+    <div>
+        <form id="f1">
+            <label>Email:</label>
+            <br>
+            <input type="email" id="i1email" required>
+            <br>
+            <label id="l1email_error" style="visibility: hidden;">Invalid email.</label> <br>
+
+            <label>Password:</label> <br>
+            <input type="password" id="i1password" required><br>
+            <label id="l1password_error" style="visibility: hidden;">At least 8 characters, min 1 Uppercase 1 Lowercase 1 Number 1 special character and only contains symbols from the alphabet.</label> <br>
+
+            <label>Repeat Password:</label> <br>
+            <input type="password" id="i1repeat-password" required> <br>
+            <label id="l1repeat-password_error" style="visibility: hidden;">Passwords do not match.</label> <br>
+
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+    <script>
+        if(getCookie("email") != null)
+        {
+            console.log(getCookie("email"));
+            decodeURIComponent(document.cookie);
+            window.location.replace("./userprofile.html");
+        }
+
+        const form1 = document.querySelector('#f1');
+        form1.addEventListener('submit', (e)=>
+        {
+            
+
+            let invalidCredentials = false;
+            let emailerror = form1.querySelector('#l1email_error');
+            let passworderror = form1.querySelector('#l1password_error');
+            let repeat_passworderror = form1.querySelector('#l1repeat-password_error');
+
+            emailerror.style.visibility = "hidden";
+            passworderror.style.visibility = "hidden";
+            repeat_passworderror.style.visibility = "hidden";
+
+            const email = form1.querySelector('#i1email').value;
+            const password = form1.querySelector('#i1password').value;
+            const repeat_password = form1.querySelector('#i1repeat-password').value;
+            if(!/.+\@.+\..+/.test(email))
+            {
+                emailerror.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(!/(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/.test(password))
+            {
+                passworderror.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+            if(repeat_password != password)
+            {
+                repeat_passworderror.style.visibility = "visible";
+                invalidCredentials = true;
+            }
+
+            if(invalidCredentials == true)
+            {
+                e.preventDefault();
+            }
+            else
+            {
+                alert('Successfull registration!');
+                //123qweQWE!@#
+                setCookie("email",email, 1);
+                setCookie("password", password, 1);
+            }
+        });
+
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {   
+            document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+    </script>
+</body>
+</html>
