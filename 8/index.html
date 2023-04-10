@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<label for="shape">Фігура: </label>
+		<select id="shape">
+			<option value="circle">Коло</option>
+			<option value="rectangle">Прямокутник</option>
+			<option value="paint">Кисть</option>
+			<option value="remover">Ластик</option>
+		</select>
+		<label for="color">Колір:</label>
+		<input type="color" id="color" value="#000000">
+		<button id="clearButton">Clear</button>
+		<input type="range" id="picker">
+	</div>
+	<canvas id="drCanvas" width="800" height="600">
+
+	</canvas>
+	<script src="scr.js"></script>
+</body>
+</html>
