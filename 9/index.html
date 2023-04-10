@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Formatter</title>
+</head>
+<body>
+  <h1>JSON Formatter</h1>
+  <div>
+    <label for="json-input">JSON data:</label><br>
+    <textarea id="json-input" rows="10" cols="50"></textarea><br>
+    <button id="format-button">Format</button>
+    <div id="formatted-json"></div>
+  </div>
+  <h2>Users from AJAX query</h2>
+  <div id="users-block">
+    <div>
+        <table>
+            <tr>
+                <td>Id: </td>
+                <td id="id"></td>
+            </tr>
+            <tr>
+                <td>Name: </td>
+                <td id="name"></td>
+            </tr>
+            <tr>
+                <td>User Name</td>
+                <td id="userName"></td>
+            </tr>
+            <tr>
+                <td>Address: </td>
+                <td id="address"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td id="email"></td>
+            </tr>
+            <tr>
+                <td>Phone: </td>
+                <td id="phone"></td>
+            </tr>
+            <tr>
+                <td>Website</td>
+                <td id="website"></td>
+            </tr>
+            <tr>
+                <button onclick="showPosts()">Show posts</button>
+            </tr>
+        </table>
+    </div>
+    <div id="users-posts">
+        <div style="display: inline-block;">
+            <p style="background-color: aquamarine;display: block;"></p>
+            <p style="background-color: azure;display: block;"></p>
+        </div>
+    </div>
+  </div>
+  <script>
+    const jsonInput = document.getElementById('json-input');
+    const formatButton = document.getElementById('format-button');
+    const formattedJson = document.getElementById('formatted-json');
+
+    formatButton.addEventListener('click', function() {
+    try {
+        const jsonData = JSON.parse(jsonInput.value);
+        const formattedData = JSON.stringify(jsonData, null, 40);
+        
+        formattedJson.innerText = formattedData;
+    } catch (error) {
+        formattedJson.innerText = 'Invalid JSON data';
+    }
+    });
+
+
+    let users;
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+    xhr.responseType = 'json';
+
+    xhr.onload = () => {
+    if(xhr.status === 200)
+    {
+        const block = document.querySelector('#users-block')
+        users = xhr.response
+        console.log(users)
+        users.forEach(user => {
+            let newEl = document.createElement('div')
+            newEl.classList.add('block')
+            newEl.addEventListener('click', function(){
+                ShowUser(user)
+            })
+            console.log(user);
+            newEl.innerText = user.name
+            block.appendChild(newEl)
+        });
+    }
+    }
+    xhr.send()
+
+    const id = document.querySelector('#id');
+    const name = document.querySelector('#name')
+    const userName = document.querySelector('#userName')
+    const address = document.querySelector('#address')
+    const email = document.querySelector('#email')
+    const phone = document.querySelector('#phone')
+    const website = document.querySelector('#website')
+    function ShowUser(user)
+    {
+        id.innerText = user.id;
+        const userAddress = user.address
+        name.innerText = user.name
+        userName.innerText = user.username
+        address.innerText = userAddress.city + ', ' + userAddress.street + ', ' + userAddress.suite;
+        email.innerText = user.email
+        phone.innerText = user.phone
+        website.innerText = user.website
+    }
+
+
+    let usersposts = document.querySelector('#users-posts');
+
+    function showPosts()
+    {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `https://jsonplaceholder.typicode.com/posts/?userId=${id.innerText}`, true);
+        xhr.responseType = 'json';
+
+        xhr.onload = () => {
+            if(xhr.status === 200)
+            {
+                console.log(JSON.stringify(xhr.response))
+                let posts = xhr.response;
+                usersposts.innerHTML = "";
+                posts.forEach((post)=>{
+                    usersposts.innerHTML += `<div style="display: inline-block;">
+                        <p style="background-color: aquamarine;display: block;">${post.title}</p>
+                        <p style="background-color: azure;display: block;">${post.body}</p>
+                    </div>` 
+                })
+            }
+        }
+        xhr.send()
+    }
+    
+        
+
+  </script>
+</body>
+</html>

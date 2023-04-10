@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Search</title>
+</head>
+<body>
+	<h1>Movie Search</h1>
+	<form>
+		<label for="title">Title:</label>
+		<input type="text" id="title" name="title">
+		<br>
+		<label for="type">Type:</label>
+		<select id="type" name="type">
+			<option value="movie">Movie</option>
+			<option value="series">Series</option>
+			<option value="episode">Episode</option>
+		</select>
+		<br>
+		<button type="submit" id="search">Search</button>
+	</form>
+	<div id="results"></div>
+	<div id="pagination"></div>
+	<script src="movie-search.js"></script>
+	<script>
+
+const apiKey = '1fbad59';
+
+
+const form = document.querySelector('form');
+const titleInput = document.querySelector('#title');
+const typeInput = document.querySelector('#type');
+const searchButton = document.querySelector('#search');
+
+
+const resultsElement = document.querySelector('#results');
+const paginationElement = document.querySelector('#pagination');
+
+
+async function searchMovies(title, type, page) {
+   
+    const url = new URL('https://www.omdbapi.com/');
+    const params = {
+        apikey: apiKey,
+        s: title,
+        type: type,
+        page: page
+    };
+    url.search = new URLSearchParams(params).toString();
+
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+
+
+searchButton.addEventListener('click', event => {
+    event.preventDefault();
+    searchMovies(titleInput.value, typeInput.value, 1)
+        .then(displayResults)
+        .catch(error => console.log(error));
+});
+
+async function showMovieDetails(id) {
+
+    const url = new URL('https://www.omdbapi.com/');
+    const params = {
+        apikey: apiKey,
+        i: id
+    };
+    url.search = new URLSearchParams(params).toString();
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+
+    const detailsElement = document.createElement('div');
+    detailsElement.innerHTML = `
+        <p>Plot: ${data.Plot}</p>
+        <p>Actors: ${data.Actors}</p>
+        <p>Director: ${data.Director}</p>
+        <p>Genre: ${data.Genre}</p>
+        <p>IMDb Rating: ${data.imdbRating}</p>
+    `;
+
+
+    let movie = document.querySelector(`#${id}`);
+    movie.appendChild(detailsElement);
+    movie.removeChild(movie.querySelector('button'));
+}
+
+
+function displayResults(results) {
+
+    resultsElement.innerHTML = '';
+    paginationElement.innerHTML = '';
+
+
+    if (results.Response === 'False') {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = 'Movie not found!';
+        resultsElement.appendChild(messageElement);
+        return;
+    }
+
+
+    results.Search.forEach(movie => {
+        const movieElement = document.createElement('div');
+        console.log(movie.imdbID)
+        movieElement.id = movie.imdbID;
+        movieElement.innerHTML = `
+            <h2>${movie.Title}</h2>
+            <p>Type: ${movie.Type}</p>
+            <p>Year: ${movie.Year}</p>
+            <img src="${movie.Poster}">
+            <button type="button" onclick="showMovieDetails('${movie.imdbID}')">Details</button>
+        `;
+        resultsElement.appendChild(movieElement);
+    });
+
+
+    const totalPages = Math.ceil(results.totalResults / 10);
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.addEventListener('click', () => {
+            searchMovies(titleInput.value, typeInput.value, i)
+                .then(displayResults)
+                .catch(error => console.log(error));
+        });
+        paginationElement.appendChild(pageLink);
+    }
+}
+</script>
+</body>
+</html>
