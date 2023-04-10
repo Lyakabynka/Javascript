@@ -70,6 +70,7 @@ async function showMovieDetails(id) {
     };
     url.search = new URLSearchParams(params).toString();
 
+    //зробив з fetch, бо наразі всі його використовують замість xml.
     const response = await fetch(url);
     const data = await response.json();
 
