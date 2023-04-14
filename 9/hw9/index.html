@@ -23,6 +23,39 @@
 	<script src="movie-search.js"></script>
 	<script>
 
+class MovieService{
+    static async search(title,type,page)
+    {
+        const url = new URL('https://www.omdbapi.com/');
+        const params = {
+            apikey: apiKey,
+            s: title,
+            type: type,
+            page: page
+        };
+        url.search = new URLSearchParams(params).toString();
+
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    }
+    static async getMovie(id)
+    {
+        const url = new URL('https://www.omdbapi.com/');
+        const params = {
+            apikey: apiKey,
+            i: id
+        };
+        url.search = new URLSearchParams(params).toString();
+
+        //зробив з fetch, бо наразі всі його використовують замість xml.
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return data;
+    }
+}
+
 const apiKey = '1fbad59';
 
 
@@ -35,59 +68,40 @@ const searchButton = document.querySelector('#search');
 const resultsElement = document.querySelector('#results');
 const paginationElement = document.querySelector('#pagination');
 
+let loadingElement = document.createElement('div');
+loadingElement.innerHTML = "Loading!";
 
-async function searchMovies(title, type, page) {
-   
-    const url = new URL('https://www.omdbapi.com/');
-    const params = {
-        apikey: apiKey,
-        s: title,
-        type: type,
-        page: page
-    };
-    url.search = new URLSearchParams(params).toString();
-
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
-
-
-
-searchButton.addEventListener('click', event => {
+searchButton.addEventListener('click', async (event) => {
     event.preventDefault();
-    searchMovies(titleInput.value, typeInput.value, 1)
-        .then(displayResults)
+    
+    resultsElement.appendChild(loadingElement)
+    await MovieService.search(titleInput.value, typeInput.value, 1)
+        .then((data) => {
+            resultsElement.removeChild(loadingElement);
+            displayResults(data);
+        })
         .catch(error => console.log(error));
 });
 
 async function showMovieDetails(id) {
+    let movieNode = document.querySelector(`#${id}`);
 
-    const url = new URL('https://www.omdbapi.com/');
-    const params = {
-        apikey: apiKey,
-        i: id
-    };
-    url.search = new URLSearchParams(params).toString();
-
-    //зробив з fetch, бо наразі всі його використовують замість xml.
-    const response = await fetch(url);
-    const data = await response.json();
-
-
+    movieNode.appendChild(loadingElement)
+    let movie = await MovieService.getMovie(id);
+    movieNode.removeChild(loadingElement);
     const detailsElement = document.createElement('div');
     detailsElement.innerHTML = `
-        <p>Plot: ${data.Plot}</p>
-        <p>Actors: ${data.Actors}</p>
-        <p>Director: ${data.Director}</p>
-        <p>Genre: ${data.Genre}</p>
-        <p>IMDb Rating: ${data.imdbRating}</p>
+        <p>Plot: ${movie.Plot}</p>
+        <p>Actors: ${movie.Actors}</p>
+        <p>Director: ${movie.Director}</p>
+        <p>Genre: ${movie.Genre}</p>
+        <p>IMDb Rating: ${movie.imdbRating}</p>
     `;
 
 
-    let movie = document.querySelector(`#${id}`);
-    movie.appendChild(detailsElement);
-    movie.removeChild(movie.querySelector('button'));
+
+    movieNode.appendChild(detailsElement);
+    movieNode.removeChild(movieNode.querySelector('button'));
 }
 
 
@@ -125,9 +139,15 @@ function displayResults(results) {
         const pageLink = document.createElement('a');
         pageLink.href = '#';
         pageLink.textContent = i;
-        pageLink.addEventListener('click', () => {
-            searchMovies(titleInput.value, typeInput.value, i)
-                .then(displayResults)
+        pageLink.addEventListener('click', async () => {
+
+            resultsElement.appendChild(loadingElement)
+
+            await MovieService.search(titleInput.value, typeInput.value, i)
+                .then((data) => {
+                    resultsElement.removeChild(loadingElement);
+                    displayResults(data);
+                })
                 .catch(error => console.log(error));
         });
         paginationElement.appendChild(pageLink);
