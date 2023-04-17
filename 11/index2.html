@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<style>
@@ -17,40 +16,36 @@
 		}
 
 		.container {
-			display: flex;
-			flex-direction: row;
+			display: grid;
+			grid-template-columns: 300px 1fr;
+			grid-template-rows: repeat(2, 1fr);
+			grid-template-areas:
+				"left top"
+				"left bottom";
 			height: 100%;
-			width: 100%;
-			position: relative;
-		}
-
-		.left-panel, .right-panel {
-			flex: 1;
-			height: 100%;
-			position: relative;
-			z-index: 1;
-		}
-
-		.top-content, .bottom-content {
-			height: 50%;
-			overflow: auto;
 		}
 
 		.left-panel {
-			width: 300px;
+			grid-area: left;
 			background-color: #ccc;
-			transition: all 0.5s;
-			overflow: hidden;
 		}
 
-		.right-panel {
+		.top-content {
+			grid-area: top;
 			background-color: #ddd;
+			overflow: auto;
+		}
+
+		.bottom-content {
+			grid-area: bottom;
+			background-color: #eee;
+			overflow: auto;
 		}
 
 		.slider {
 			position: absolute;
 			top: calc(50% - 5px);
-			left: 0;
+			left: 50%;
 			width: 100%;
 			height: 10px;
 			background-color: #000;
@@ -73,27 +68,19 @@
 	</style>
 </head>
 <body>
-
+	
 	<div class="container">
 		<div class="left-panel">
-			<div class="top-content">
-				<p>Content 3</p>
-			</div>
-			<div class="bottom-content">
-				<p>Content 4</p>
-			</div>
+			<p>Left Panel</p>
 		</div>
-		<div class="right-panel">
-			<div class="top-content">
-				<p>Content 1</p>
-			</div>
-			<div class="bottom-content">
-				<p>Content 2</p>
-			</div>
+		<div class="top-content">
+			<p>Content 1</p>
+		</div>
+		<div class="bottom-content">
+			<p>Content 2</p>
 		</div>
 		<div class="slider"></div>
 		<div class="arrow"></div>
-		<button class="toggle-left-panel">Toggle Left Panel</button>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -101,14 +88,14 @@
 		$(document).ready(function() {
 			var isLeftPanelHidden = false;
 
-			$(".toggle-left-panel").click(function() {
+			$(".arrow").click(function() {
 				if (isLeftPanelHidden) {
 					$(".left-panel").animate({width: "300px"});
-					$(this).text("Hide Left Panel");
+					$(this).css({"border-left": "20px solid #ccc", "border-right": "none"});
 					isLeftPanelHidden = false;
 				} else {
 					$(".left-panel").animate({width: "0"});
-					$(this).text("Show Left Panel");
+					$(this).css({"border-left": "none", "border-right": "20px solid #ccc"});
 					isLeftPanelHidden = true;
 				}
 			});
@@ -130,24 +117,33 @@
 			$(document).mousemove(function(e) {
 				if (isDragging) {
 					var deltaY = e.pageY - lastY;
-					var newTopContentHeight = topContentHeight + deltaY;
-					var newBottomContentHeight = bottomContentHeight - deltaY;
-
-					if (newTopContentHeight < 100) {
-						newTopContentHeight = 100;
-						newBottomContentHeight = topContentHeight + bottomContentHeight - 100;
-					} else if (newBottomContentHeight < 100) {
-						newBottomContentHeight = 100;
-						newTopContentHeight = topContentHeight + bottomContentHeight - 100;
-					}
-
-					$(".top-content").css("height", newTopContentHeight + "px");
-					$(".bottom-content").css("height", newBottomContentHeight + "px");
-
-					lastY = e.pageY;
+					var sliderPosition = $(".slider").position().top + deltaY;
+					if (sliderPosition < 0) {
+					sliderPosition = 0;
+				} else if (sliderPosition > $(".track").height() - $(".slider").height()) {
+					sliderPosition = $(".track").height() - $(".slider").height();
 				}
-			});
+
+				$(".slider").css("top", sliderPosition + "px");
+
+				var topContentPosition = $(".top-content").position().top + deltaY;
+				var bottomContentPosition = $(".bottom-content").position().top + deltaY;
+
+				if (topContentPosition > 0) {
+					topContentPosition = 0;
+					bottomContentPosition = topContentHeight + $(".slider").height();
+				} else if (bottomContentPosition < $(".container").height()) {
+					bottomContentPosition = $(".container").height();
+					topContentPosition = bottomContentPosition - $(".slider").height() - topContentHeight;
+				}
+
+				$(".top-content").css("top", topContentPosition + "px");
+				$(".bottom-content").css("top", bottomContentPosition + "px");
+
+				lastY = e.pageY;
+			}
 		});
-	</script>
+	});
+</script>
 </body>
 </html>
