@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html, body {
+			height: 100%;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: row;
+			height: 100%;
+			width: 100%;
+			position: relative;
+		}
+
+		.left-panel, .right-panel {
+			flex: 1;
+			height: 100%;
+			position: relative;
+			z-index: 1;
+		}
+
+		.top-content, .bottom-content {
+			height: 50%;
+			overflow: auto;
+		}
+
+		.left-panel {
+			width: 300px;
+			background-color: #ccc;
+			transition: all 0.5s;
+			overflow: hidden;
+		}
+
+		.right-panel {
+			background-color: #ddd;
+		}
+
+		.slider {
+			position: absolute;
+			top: calc(50% - 5px);
+			left: 0;
+			width: 100%;
+			height: 10px;
+			background-color: #000;
+			cursor: ns-resize;
+			z-index: 2;
+		}
+
+		.arrow {
+			position: absolute;
+			top: calc(50% - 20px);
+			right: -20px;
+			width: 0;
+			height: 0;
+			border-top: 20px solid transparent;
+			border-left: 20px solid #ccc;
+			border-bottom: 20px solid transparent;
+			cursor: pointer;
+			z-index: 2;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="left-panel">
+			<div class="top-content">
+				<p>Content 3</p>
+			</div>
+			<div class="bottom-content">
+				<p>Content 4</p>
+			</div>
+		</div>
+		<div class="right-panel">
+			<div class="top-content">
+				<p>Content 1</p>
+			</div>
+			<div class="bottom-content">
+				<p>Content 2</p>
+			</div>
+		</div>
+		<div class="slider"></div>
+		<div class="arrow"></div>
+		<button class="toggle-left-panel">Toggle Left Panel</button>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var isLeftPanelHidden = false;
+
+			$(".toggle-left-panel").click(function() {
+				if (isLeftPanelHidden) {
+					$(".left-panel").animate({width: "300px"});
+					$(this).text("Hide Left Panel");
+					isLeftPanelHidden = false;
+				} else {
+					$(".left-panel").animate({width: "0"});
+					$(this).text("Show Left Panel");
+					isLeftPanelHidden = true;
+				}
+			});
+
+			var isDragging = false;
+			var lastY = 0;
+			var topContentHeight = $(".top-content").height();
+			var bottomContentHeight = $(".bottom-content").height();
+
+			$(".slider").mousedown(function(e) {
+				isDragging = true;
+				lastY = e.pageY;
+			});
+
+			$(document).mouseup(function() {
+				isDragging = false;
+			});
+
+			$(document).mousemove(function(e) {
+				if (isDragging) {
+					var deltaY = e.pageY - lastY;
+					var newTopContentHeight = topContentHeight + deltaY;
+					var newBottomContentHeight = bottomContentHeight - deltaY;
+
+					if (newTopContentHeight < 100) {
+						newTopContentHeight = 100;
+						newBottomContentHeight = topContentHeight + bottomContentHeight - 100;
+					} else if (newBottomContentHeight < 100) {
+						newBottomContentHeight = 100;
+						newTopContentHeight = topContentHeight + bottomContentHeight - 100;
+					}
+
+					$(".top-content").css("height", newTopContentHeight + "px");
+					$(".bottom-content").css("height", newBottomContentHeight + "px");
+
+					lastY = e.pageY;
+				}
+			});
+		});
+	</script>
+</body>
+</html>

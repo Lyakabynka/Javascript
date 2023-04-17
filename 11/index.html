@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body, html {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		.container {
+			display: flex;
+			flex-direction: row;
+			height: 100%;
+		}
+		.left-block {
+			flex-grow: 0;
+			flex-shrink: 0;
+			width: 300px;
+			background-color: #ddd;
+			transition: width 0.5s ease-in-out;
+		}
+		.right-block {
+			flex-grow: 1;
+			background-color: #eee;
+			overflow-y: auto;
+			padding: 20px;
+			height: 100%;
+		}
+		.slider {
+			width: 20px;
+			height: 200px;
+			background-color: #ccc;
+			position: absolute;
+			top: calc(50% - 100px);
+			right: 0;
+			cursor: ns-resize;
+			z-index: 1;
+		}
+		.arrow {
+			width: 40px;
+			height: 40px;
+			background-color: #ccc;
+			position: absolute;
+			top: calc(50% - 20px);
+			left: 0;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1;
+		}
+		.arrow i {
+			font-size: 30px;
+			color: #fff;
+		}
+    </style>
+</head>
+<body>
+    <p>Task 1</p>
+    <div id="d1">
+        <label>Lenght of string to generate: </label>
+        <input id="length" type="number"> <br>
+        <label>Characters type:</label> <br>
+        <label>0-9</label> <input id="digits" type="checkbox" checked> <br>
+        <label>A-Z</label> <input id="upper-case" type="checkbox" checked> <br>
+        <label>a-z</label> <input id="lower-case" type="checkbox" checked> <br>
+        <input id="generate" type="submit" value="Generate"> <br>
+        <label>Result: </label> <input id="result" type="text" readonly>
+    </div>
+
+    <[]
+    
+    <script>
+    $(document).ready(function() {
+        $("#generate").click(function() {
+            var length = $("#length").val();
+            var allowed_chars = "";
+            if ($("#digits").is(":checked")) {
+            allowed_chars += "0123456789";
+            }
+            if ($("#upper-case").is(":checked")) {
+            allowed_chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            }
+            if ($("#lower-case").is(":checked")) {
+            allowed_chars += "abcdefghijklmnopqrstuvwxyz";
+            }
+            var result = "";
+            for (var i = 0; i < length; i++) {
+            result += allowed_chars.charAt(Math.floor(Math.random() * allowed_chars.length));
+            }
+            $("#result").val(result);
+        });
+    });
+    
+
+    </script>
+</body>
+</html>
