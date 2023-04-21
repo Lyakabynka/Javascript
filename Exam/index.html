@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container my-5">
+		<h1 class="text-center mb-4">Movie Search</h1>
+		<form class="form-inline justify-content-center mb-4">
+			<div class="form-group mx-sm-3 mb-2">
+				<label for="title" class="sr-only">Title:</label>
+				<input id="title" type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+			</div>
+			<div class="form-group mx-sm-3 mb-2">
+				<label for="type" class="sr-only">Type:</label>
+				<select class="form-control" id="type" name="type">
+					<option value="movie">Movie</option>
+					<option value="series">Series</option>
+					<option value="episode">Episode</option>
+				</select>
+			</div>
+			<button id="search" type="submit" class="btn btn-primary mb-2">Search</button>
+		</form>
+		<div id="results" class="row"></div>
+		<div id="pagination" class="mt-4"></div>
+	</div>
+	<!-- Add Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
