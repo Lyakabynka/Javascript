@@ -24,7 +24,7 @@ class MovieService{
         };
         url.search = new URLSearchParams(params).toString();
 
-        //зробив з fetch, бо наразі всі його використовують замість xml.
+        
         const response = await fetch(url);
         const data = await response.json();
 
@@ -92,41 +92,46 @@ function createCard(element){
 
   
   card.addEventListener('mouseenter',async ()=>{
-    if(card.isDescriptionDisplayed == true) return;
+        if(card.isDescriptionDisplayed == true) return;
 
-    card.isDescriptionDisplayed = true;
+        card.isDescriptionDisplayed = true;
 
-    const movie = await MovieService.getMovie(card.id);
+        const movie = await MovieService.getMovie(card.id);
 
-      // rating
-    var star = document.createElement("i");
-    star.setAttribute("class", "fas fa-star");
-    var rating = document.createElement('span');
-    rating.innerText = movie.imdbRating + " ";
-    rating.appendChild(star);
+        // rating
+        var star = document.createElement("i");
+        star.setAttribute("class", "fas fa-star");
+        var rating = document.createElement('span');
+        rating.innerText = movie.imdbRating + " ";
+        rating.appendChild(star);
 
-    type.parentElement.insertBefore(rating, type.nextSibling)
+        type.parentElement.insertBefore(rating, type.nextSibling);
 
-    type.innerText += `, ${movie.Runtime}`
-
-
-    var genre = document.createElement('span');
-    genre.innerText = movie.Genre;
-    card.appendChild(genre);
+        type.innerText += `, ${movie.Runtime}`
 
 
-    var plot = document.createElement('p');
-    plot.style.marginTop = '10px';
-    plot.style.fontSize = '0.75vw';
-    plot.innerText = movie.Plot;
-    card.appendChild(plot);
+        var genre = document.createElement('span');
+        genre.innerText = movie.Genre;
+        card.appendChild(genre);
 
 
-    var actors = document.createElement('span');
-    actors.innerText = movie.Actors;
-    card.appendChild(actors);
+        var plot = document.createElement('p');
+        plot.style.marginTop = '10px';
+        plot.style.display = 'inline-block';
+        plot.innerText = movie.Plot;
+        card.appendChild(plot);
 
-  });
+        var actors = document.createElement('span');
+        actors.style.display = 'inline-block';
+        actors.style.width = '30%';
+        actors.style.marginRight = '0';
+        actors.style.marginTop = '10px';
+        actors.style.marginLeft = '10px';
+        actors.style.verticalAlign = 'top';
+        actors.innerText = movie.Actors;
+
+        card.appendChild(actors);
+    });
 
   return card;
 }
@@ -161,6 +166,7 @@ function displayResults(results) {
     const totalPages = Math.ceil(results.totalResults / 10);
     for (let i = 1; i <= totalPages; i++) {
         const pageLink = document.createElement('a');
+        pageLink.style.marginRight = '10px';
         pageLink.href = '#';
         pageLink.textContent = i;
         pageLink.addEventListener('click', async () => {
